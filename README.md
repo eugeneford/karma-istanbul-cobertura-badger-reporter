@@ -1,3 +1,7 @@
+<a href='https://www.npmjs.com/package/karma-istanbul-cobertura-badger-reporter'>
+  <img src='https://img.shields.io/npm/v/karma-istanbul-cobertura-badger-reporter.svg?v=0' alt='NPM Version' />
+</a>
+  
 # karma-istanbul-cobertura-badger-reporter
 Karma reporter for https://github.com/intuit/istanbul-cobertura-badger
 
