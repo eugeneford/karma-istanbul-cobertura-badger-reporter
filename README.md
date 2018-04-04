@@ -5,6 +5,8 @@
 # karma-istanbul-cobertura-badger-reporter
 Karma reporter for https://github.com/intuit/istanbul-cobertura-badger
 
+Allows you to autogenerate coverage badges using cobertura reports
+
 ## How to install
 ```js
 npm install --save-dev karma-istanbul-cobertura-badger-reporter
