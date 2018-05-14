@@ -1,5 +1,6 @@
 var coverageBadger = require('istanbul-cobertura-badger');
 var extend = require('xtend');
+var fs = require('fs');
 
 var baseConfig = {
   badgeFileName: 'coverage',
@@ -12,15 +13,28 @@ var BadgerReporter = function (baseReporterDecorator, config, logger) {
 
   var log = logger.create('cobertura-badger');
   var opts = extend(baseConfig, config.istanbulCoberturaBadger);
+  var exitCode = 0;
 
-  const baseReporterOnExit = this.onExit;
+  var baseReporterOnRunComplete = this.onRunComplete;
+  this.onRunComplete = function (browsers, results) {
+    baseReporterOnRunComplete.apply(this, arguments);
+    exitCode = results.exitCode;
+  }
+
+  var baseReporterOnExit = this.onExit;
   this.onExit = function (done) {
     if (baseReporterOnExit) baseReporterOnExit.apply(this, arguments);
+    if (exitCode !== 0) return done();
+
+    if (!fs.existsSync(opts.istanbulReportFile)) {
+      log.error('"' + opts.istanbulReportFile + '" does not exists.');
+      return done();
+    };
 
     coverageBadger(opts, function (err, status) {
       if (err) log.error(err.message);
       log.info('Badge successfully generated at ' + status.badgeFile.filePath);
-      done();
+      return done();
     });
   };
 };
