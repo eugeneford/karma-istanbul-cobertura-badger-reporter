@@ -31,6 +31,14 @@ var BadgerReporter = function (baseReporterDecorator, config, logger) {
       return done();
     };
 
+    var xmlReport = fs.readFileSync(opts.istanbulReportFile, 'utf8');
+    var isEmpty = /<packages>\s*<\/packages>/i.test(xmlReport);
+
+    if (isEmpty) {
+      log.info('Coverage report is empty. Skipping badge generation.');
+      return done();
+    }
+
     coverageBadger(opts, function (err, status) {
       if (err) log.error(err.message);
       log.info('Badge successfully generated at ' + status.badgeFile.filePath);
