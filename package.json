@@ -1,6 +1,6 @@
 {
   "name": "karma-istanbul-cobertura-badger-reporter",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Karma reporter for istanbul-cobertura-badger",
   "main": "index.js",
   "scripts": {
